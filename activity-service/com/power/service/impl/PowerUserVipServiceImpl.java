@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+import com.power.api.PowerUserVipService;
 import com.power.dao.PowerUserVipDao;
 import com.power.entity.PowerUserVipEntity;
-import com.power.service.PowerUserVipService;
 
 
 
