@@ -1,4 +1,4 @@
-package com.power.api;
+package com.power.service;
 
 import com.power.entity.PowerUserVipEntity;
 
