@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.PowerUserVipDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.PowerUserVipEntity" id="powerUserVipMap">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="start" column="start"/>
+        <result property="end" column="end"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.PowerUserVipEntity">
+		select * from power_user_vip where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.PowerUserVipEntity">
+		select * from power_user_vip
+        <where>
+			                <!-- 用户accountId -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 类型(对应modul表中的id) -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- 会员起始时间 -->
+                <if test="start != null and start.trim() != ''">
+                    AND start = #{start}
+                </if>
+			                <!-- 结束时间 -->
+                <if test="end != null and end.trim() != ''">
+                    AND end = #{end}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_user_vip
+		<where>
+			                <!-- 用户accountId -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 类型(对应modul表中的id) -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- 会员起始时间 -->
+                <if test="start != null and start.trim() != ''">
+                    AND start = #{start}
+                </if>
+			                <!-- 结束时间 -->
+                <if test="end != null and end.trim() != ''">
+                    AND end = #{end}
+                </if>
+			        </where> 
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.PowerUserVipEntity">
+		insert into power_user_vip
+		(
+			`id`, 
+			`type`, 
+			`start`, 
+			`end`
+		)
+		values
+		(
+			#{id}, 
+			#{type}, 
+			#{start}, 
+			#{end}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.PowerUserVipEntity">
+		update power_user_vip 
+		<set>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="start != null">`start` = #{start}, </if>
+			<if test="end != null">`end` = #{end}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from power_user_vip where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from power_user_vip where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
