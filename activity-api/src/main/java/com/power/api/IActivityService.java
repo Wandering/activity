@@ -2,6 +2,7 @@ package com.power.api;
 
 import java.util.List;
 
+import com.power.entity.ResUserActivity;
 import com.power.entity.UserActivityEntity;
 
 public interface IActivityService {
@@ -11,5 +12,5 @@ public interface IActivityService {
 	 * @param nowTime
 	 * @return
 	 */
-	List<UserActivityEntity> sendActivity(Long nowTime);
+	List<ResUserActivity> sendActivity(Long nowTime,Long userId);
 }

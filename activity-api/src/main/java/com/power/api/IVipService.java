@@ -7,5 +7,5 @@ public interface IVipService {
 	 * @param userId
 	 * @return
 	 */
-	Boolean AddVip(Long userId );
+	Boolean AddVip(int userId,int activityId );
 }

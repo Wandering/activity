@@ -15,7 +15,7 @@ public class TestVip extends BaseTest{
 	public void testVipService(){
 		 IVipServiceImpl vip = new IVipServiceImpl();
 
-		 vip.AddVip(3L);
+		 vip.AddVip(3,2);
 
 	}
 
