@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	 <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="zhiluClient"  />
+    <!-- 注册中心暴露服务地址 -->
+    <dubbo:registry address="${dubbo_zk_url}" file="/tmp/dubbo.cache"/>
+
+    <dubbo:protocol port="-1"/>
+
+
+	<!-- 配置服务 -->
+	<dubbo:service id="IVipService" interface="com.power.api.IVipService"  ref="IVipServiceImpl" timeout="60000" retries="0" />
+	<dubbo:service id="IActivityService" interface="com.power.api.IActivityService"  ref="IActivityServiceImpl" timeout="60000" retries="0" />
+	<dubbo:service id="ISurveyService" interface="com.power.api.ISurveyService"  ref="ISurveyServiceImpl" timeout="60000" retries="0" />
+
+</beans>

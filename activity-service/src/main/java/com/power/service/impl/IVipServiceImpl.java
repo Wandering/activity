@@ -13,11 +13,10 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 
 
-@Service("VipServiceImpl")
+@Service
 public class IVipServiceImpl implements IVipService {
 
 	private boolean isAdd = true;
-
 	private PowerUserVipDao powerUserVipDao ;
 	
 	private UserActivityExEntity userActivityExEntity;

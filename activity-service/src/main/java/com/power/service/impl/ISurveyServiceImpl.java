@@ -2,11 +2,16 @@ package com.power.service.impl;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
+
 import com.power.api.ISurveyService;
 import com.power.dao.UserQuestionnaireDao;
 import com.power.entity.UserQuestionnaireEntity;
 
-public class ISurveyImpl  implements ISurveyService {
+
+
+@Service
+public class ISurveyServiceImpl  implements ISurveyService {
 	private boolean isAdd = true;
 
 	private UserQuestionnaireDao userQuestionnaireDao ;

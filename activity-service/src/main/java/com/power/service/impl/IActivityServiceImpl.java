@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.power.api.IActivityService;
 import com.power.dao.UserActivityDao;
 import com.power.dao.UserActivityExDao;
 import com.power.entity.ResUserActivity;
 import com.power.entity.UserActivityEntity;
-
+@Service
 public class IActivityServiceImpl implements IActivityService {
      private UserActivityDao userActivityDao;
      
