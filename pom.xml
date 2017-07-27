@@ -63,10 +63,8 @@
         <repository>
             <id>power</id>
             <name>power</name>
-            <url>        maven { url "http://192.168.10.49:8081/repository/maven-public/" }</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <url>http://192.168.10.49:8081/repository/maven-public/</url>
+          
         </repository>
     </repositories>
     <pluginRepositories>

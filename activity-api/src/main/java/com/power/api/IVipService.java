@@ -1,6 +1,6 @@
 package com.power.api;
 
-public interface VipService {
+public interface IVipService {
 
 	/**
 	 * 填写问卷调查后添加三个月黄金会员
