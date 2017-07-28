@@ -74,7 +74,7 @@ public class ApiUserQuestionAnswerController{
             if (userAnswerDTO==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "参数为空");
             }
-            if (userAnswerDTO.getAccountId()==null){
+            if (userAnswerDTO.getUserId()==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "用户ID为空");
             }
             if (userAnswerDTO.getQuestionnaireId()==null){
@@ -99,13 +99,13 @@ public class ApiUserQuestionAnswerController{
             }
 
             Map<String,Object> map = new HashMap<>();
-            map .put("accountId",userAnswerDTO.getAccountId());
+            map .put("accountId",userAnswerDTO.getUserId());
             map .put("activityId",userAnswerDTO.getActivityId());
             ActivityUser activityUser = activityUserService.viewOne(map);
             if (activityUser == null){
                 activityUser = new ActivityUser();
                 activityUser.setProgress(QusetionProgressEnum.START.getValue());
-                activityUser.setAccountId(userAnswerDTO.getAccountId());
+                activityUser.setAccountId(userAnswerDTO.getUserId());
                 activityUser.setActivityId(userAnswerDTO.getActivityId());
                 activityUser.setCreateTime(System.currentTimeMillis()/1000);
                 activityUser.setUpdateTime(System.currentTimeMillis()/1000);
@@ -136,7 +136,7 @@ public class ApiUserQuestionAnswerController{
             if (userAnswerDTO==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
             }
-            if (userAnswerDTO.getAccountId()==null){
+            if (userAnswerDTO.getUserId()==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "用户ID为空");
             }
             if (userAnswerDTO.getQuestionnaireId()==null){
@@ -166,7 +166,7 @@ public class ApiUserQuestionAnswerController{
                 throw new BizException(RtnCodeEnum.ACTIVITY_END.getValue(), RtnCodeEnum.ACTIVITY_END.getDesc());
             }
             Map<String,Object> map = new HashMap<>();
-            map .put("accountId",userAnswerDTO.getAccountId());
+            map .put("accountId",userAnswerDTO.getUserId());
             map .put("activityId",userAnswerDTO.getActivityId());
             ActivityUser activityUser = activityUserService.viewOne(map);
             if (activityUser == null){
@@ -178,7 +178,7 @@ public class ApiUserQuestionAnswerController{
             List<UserQuestionAnswer> userQuestionAnswers = new ArrayList<>();
             for (UserAnswerDTO.Answer answer : userAnswerDTO.getAnswers()){
                 UserQuestionAnswer userQuestionAnswer = new UserQuestionAnswer();
-                userQuestionAnswer.setAccountId(userAnswerDTO.getAccountId());
+                userQuestionAnswer.setAccountId(userAnswerDTO.getUserId());
                 userQuestionAnswer.setQuestionnaireId(userAnswerDTO.getQuestionnaireId());
                 userQuestionAnswer.setContent(answer.getContent());
                 userQuestionAnswer.setQuestionNo(answer.getQuestionNo());

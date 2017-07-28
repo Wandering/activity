@@ -33,7 +33,7 @@ public class ApiUserQuestionAnswerControllerTest {
     public void testSaveAnswers() throws Exception {
 
         UserAnswerDTO userAnswerDTO = new UserAnswerDTO();
-        userAnswerDTO.setAccountId(10L);
+        userAnswerDTO.setUserId(10L);
         userAnswerDTO.setQuestionnaireId(1);
         userAnswerDTO.setActivityId(1);
         List<UserAnswerDTO.Answer> userAnswer = new ArrayList<>();
@@ -60,7 +60,7 @@ public class ApiUserQuestionAnswerControllerTest {
     public void testCreateQuestion() throws Exception {
 
         UserAnswerDTO userAnswerDTO = new UserAnswerDTO();
-        userAnswerDTO.setAccountId(10L);
+        userAnswerDTO.setUserId(10L);
         userAnswerDTO.setQuestionnaireId(1);
         userAnswerDTO.setActivityId(1);
         System.out.println(JSON.toJSONString(userAnswerDTO));

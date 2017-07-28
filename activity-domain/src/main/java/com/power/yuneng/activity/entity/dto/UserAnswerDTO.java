@@ -6,22 +6,22 @@ import java.util.List;
  * Created by Administrator on 2017/7/28.
  */
 public class UserAnswerDTO {
-    /** 用户id */
+    /** 活动ID */
     private Integer activityId;
-    /** 用户id */
-    private Long accountId;
+    /** 用户bizID == accountId */
+    private Long userId;
 
     /** 问卷ID */
     private Integer questionnaireId;
 
     List<Answer> answers;
 
-    public Long getAccountId() {
-        return accountId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Integer getQuestionnaireId() {
