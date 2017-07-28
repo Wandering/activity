@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.power.core.domain.BizData4Page;
 import com.power.core.domain.SearchField;
 import com.power.core.domain.wrapper.BooleanWrapper;
+import com.power.core.domain.wrapper.IntegerWrapper;
 import com.power.core.domain.wrapper.SearchEnum;
 import com.power.core.domain.wrapper.StringWrapper;
 import com.power.core.exception.BizException;
@@ -20,6 +21,7 @@ import com.power.yuneng.activity.entity.Activity;
 import com.power.yuneng.activity.entity.ActivityUser;
 import com.power.yuneng.activity.entity.UserQuestion;
 import com.power.yuneng.activity.entity.UserQuestionAnswer;
+import com.power.yuneng.activity.entity.dto.UserActivityDTO;
 import com.power.yuneng.activity.entity.dto.UserAnswerDTO;
 import com.power.yuneng.activity.entity.enums.QusetionProgressEnum;
 import com.power.yuneng.activity.service.IActivityService;
@@ -70,9 +72,72 @@ public class ApiUserQuestionAnswerController{
             if (org.apache.commons.lang.StringUtils.isEmpty(question)){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "参数为空");
             }
-            UserAnswerDTO userAnswerDTO = JSON.parseObject(question,UserAnswerDTO.class);
-            if (userAnswerDTO==null){
+            UserActivityDTO userActivityDTO = JSON.parseObject(question,UserActivityDTO.class);
+            if (userActivityDTO==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "参数为空");
+            }
+            if (userActivityDTO.getUserId()==null){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "用户ID为空");
+            }
+            if (userActivityDTO.getQuestionnaireId()==null){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷编号为空");
+            }
+            UserQuestion userQuestion = userQuestionService.view(userActivityDTO.getQuestionnaireId());
+            if (userQuestion == null){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷不存在");
+            }
+            if (userActivityDTO.getActivityId()==null){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "活动编码为空");
+            }
+            Activity activity = activityService.view(userActivityDTO.getActivityId());
+            if (activity==null){
+                throw new BizException(RtnCodeEnum.ACTIVITY_NOT_EXIST.getValue(), RtnCodeEnum.ACTIVITY_NOT_EXIST.getDesc());
+            }
+            if (activity.getStartTime()>System.currentTimeMillis()/1000){
+                throw new BizException(RtnCodeEnum.ACTIVITY_NOT_START.getValue(), RtnCodeEnum.ACTIVITY_NOT_START.getDesc());
+            }
+            if (activity.getEndTime()<System.currentTimeMillis()/1000){
+                throw new BizException(RtnCodeEnum.ACTIVITY_END.getValue(), RtnCodeEnum.ACTIVITY_END.getDesc());
+            }
+
+            Map<String,Object> map = new HashMap<>();
+            map .put("accountId",userActivityDTO.getUserId());
+            map .put("activityId",userActivityDTO.getActivityId());
+            ActivityUser activityUser = activityUserService.viewOne(map);
+            if (activityUser == null){
+                activityUser = new ActivityUser();
+                activityUser.setProgress(QusetionProgressEnum.START.getValue());
+                activityUser.setAccountId(userActivityDTO.getUserId());
+                activityUser.setActivityId(userActivityDTO.getActivityId());
+                activityUser.setCreateTime(System.currentTimeMillis()/1000);
+                activityUser.setUpdateTime(System.currentTimeMillis()/1000);
+                activityUserService.create(activityUser);
+            }
+            return new BooleanWrapper(true);
+        } catch (BizException bize) {
+            throw bize;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "用户问卷添加失败");
+        }
+    }
+
+
+    /**
+     * 新增 批量添加问卷答案表
+     * @param answers
+     * @return  处理条数
+     */
+    @ResponseBody
+    @RequestMapping(value = "/question/queryUserProgress", method = RequestMethod.POST)
+    public Object queryUserProgress(String answers) {
+        try {
+            if (org.apache.commons.lang.StringUtils.isEmpty(answers)){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
+            }
+            UserAnswerDTO userAnswerDTO = JSON.parseObject(answers,UserAnswerDTO.class);
+            if (userAnswerDTO==null){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
             }
             if (userAnswerDTO.getUserId()==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "用户ID为空");
@@ -87,6 +152,12 @@ public class ApiUserQuestionAnswerController{
             if (userAnswerDTO.getActivityId()==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "活动编码为空");
             }
+            if (userAnswerDTO.getAnswers()==null){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
+            }
+            if (userAnswerDTO.getAnswers().size()==0){
+                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
+            }
             Activity activity = activityService.view(userAnswerDTO.getActivityId());
             if (activity==null){
                 throw new BizException(RtnCodeEnum.ACTIVITY_NOT_EXIST.getValue(), RtnCodeEnum.ACTIVITY_NOT_EXIST.getDesc());
@@ -97,21 +168,15 @@ public class ApiUserQuestionAnswerController{
             if (activity.getEndTime()<System.currentTimeMillis()/1000){
                 throw new BizException(RtnCodeEnum.ACTIVITY_END.getValue(), RtnCodeEnum.ACTIVITY_END.getDesc());
             }
-
             Map<String,Object> map = new HashMap<>();
             map .put("accountId",userAnswerDTO.getUserId());
             map .put("activityId",userAnswerDTO.getActivityId());
             ActivityUser activityUser = activityUserService.viewOne(map);
             if (activityUser == null){
-                activityUser = new ActivityUser();
-                activityUser.setProgress(QusetionProgressEnum.START.getValue());
-                activityUser.setAccountId(userAnswerDTO.getUserId());
-                activityUser.setActivityId(userAnswerDTO.getActivityId());
-                activityUser.setCreateTime(System.currentTimeMillis()/1000);
-                activityUser.setUpdateTime(System.currentTimeMillis()/1000);
-                activityUserService.create(activityUser);
+                return new IntegerWrapper(0);
             }
-            return new BooleanWrapper(true);
+
+            return new IntegerWrapper(activityUser.getProgress());
         } catch (BizException bize) {
             throw bize;
         } catch (Exception e) {

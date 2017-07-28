@@ -5,32 +5,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/28.
  */
-public class UserAnswerDTO {
-    /** 活动ID */
-    private Integer activityId;
-    /** 用户bizID == accountId */
-    private Long userId;
-
-    /** 问卷ID */
-    private Integer questionnaireId;
+public class UserAnswerDTO extends UserActivityDTO {
 
     List<Answer> answers;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getQuestionnaireId() {
-        return questionnaireId;
-    }
-
-    public void setQuestionnaireId(Integer questionnaireId) {
-        this.questionnaireId = questionnaireId;
-    }
 
     public List<Answer> getAnswers() {
         return answers;
@@ -40,18 +18,15 @@ public class UserAnswerDTO {
         this.answers = answers;
     }
 
-    public Integer getActivityId() {
-        return activityId;
-    }
 
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
-    public static class Answer{
-        /** 题号 */
+    public static class Answer {
+        /**
+         * 题号
+         */
         private Integer questionNo;
-        /** 内容 */
+        /**
+         * 内容
+         */
         private String content;
 
         public Integer getQuestionNo() {
