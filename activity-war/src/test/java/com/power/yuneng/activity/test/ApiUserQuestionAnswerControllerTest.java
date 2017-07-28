@@ -30,7 +30,7 @@ public class ApiUserQuestionAnswerControllerTest {
     @Autowired
     private MockMvc mvc;
     @Test
-    public void testSavelist() throws Exception {
+    public void testSaveAnswers() throws Exception {
 
         UserAnswerDTO userAnswerDTO = new UserAnswerDTO();
         userAnswerDTO.setAccountId(10L);
@@ -45,7 +45,7 @@ public class ApiUserQuestionAnswerControllerTest {
         }
         userAnswerDTO.setAnswers(userAnswer);
         System.out.println(JSON.toJSONString(userAnswerDTO));
-        this.mvc.perform(post("/api/userquestionanswer/savelist")
+        this.mvc.perform(post("/api/userquestionanswer/saveAnswers")
 //                .param("accountId","10")
                 .param("answers",JSON.toJSONString(userAnswerDTO)).accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
         ).andDo(new ResultHandler() {

@@ -126,8 +126,8 @@ public class ApiUserQuestionAnswerController{
      * @return  处理条数
      */
     @ResponseBody
-    @RequestMapping(value = "/userquestionanswer/savelist", method = RequestMethod.POST)
-    public Object savelist(String answers) {
+    @RequestMapping(value = "/userquestionanswer/saveAnswers", method = RequestMethod.POST)
+    public Object saveAnswers(String answers) {
         try {
             if (org.apache.commons.lang.StringUtils.isEmpty(answers)){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
