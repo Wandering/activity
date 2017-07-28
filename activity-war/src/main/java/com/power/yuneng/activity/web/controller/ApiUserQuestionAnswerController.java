@@ -125,17 +125,17 @@ public class ApiUserQuestionAnswerController{
 
     /**
      * 新增 批量添加问卷答案表
-     * @param answers
+     * @param question
      * @return  处理条数
      */
     @ResponseBody
     @RequestMapping(value = "/question/queryUserProgress", method = RequestMethod.POST)
-    public Object queryUserProgress(String answers) {
+    public Object queryUserProgress(String question) {
         try {
-            if (org.apache.commons.lang.StringUtils.isEmpty(answers)){
+            if (org.apache.commons.lang.StringUtils.isEmpty(question)){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
             }
-            UserAnswerDTO userAnswerDTO = JSON.parseObject(answers,UserAnswerDTO.class);
+            UserAnswerDTO userAnswerDTO = JSON.parseObject(question,UserAnswerDTO.class);
             if (userAnswerDTO==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
             }
