@@ -152,12 +152,6 @@ public class ApiUserQuestionAnswerController{
             if (userAnswerDTO.getActivityId()==null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "活动编码为空");
             }
-            if (userAnswerDTO.getAnswers()==null){
-                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
-            }
-            if (userAnswerDTO.getAnswers().size()==0){
-                throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷结果为空");
-            }
             Activity activity = activityService.view(userAnswerDTO.getActivityId());
             if (activity==null){
                 throw new BizException(RtnCodeEnum.ACTIVITY_NOT_EXIST.getValue(), RtnCodeEnum.ACTIVITY_NOT_EXIST.getDesc());

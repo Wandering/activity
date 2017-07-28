@@ -62,13 +62,13 @@
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 
         </repository>
+        <!--<repository>-->
+            <!--<id>spring</id>-->
+            <!--<name>spring nexus</name>-->
+            <!--<url>http://repo.spring.io/plugins-release</url>-->
+        <!--</repository>-->
         <repository>
-            <id>public</id>
-            <name>spring nexus</name>
-            <url>http://repo.spring.io/plugins-release</url>
-        </repository>
-        <repository>
-            <id>public</id>
+            <id>maven2</id>
             <name>maven2 nexus</name>
             <url>http://repo.maven.apache.org/maven2</url>
         </repository>
