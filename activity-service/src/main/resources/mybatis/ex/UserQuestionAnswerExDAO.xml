@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.yuneng.activity.dao.ex.IUserQuestionAnswerExDAO">
+
+    <!--保存问卷答案-->
+	<insert id="saveAnswers">
+        INSERT INTO power_user_question_answer(questionnaireId,questionNo,accountId,content) VALUES
+        <foreach collection="answers" item="answer" separator=",">
+            (#{answer.questionnaireId},#{answer.questionNo},#{answer.accountId},#{answer.content})
+        </foreach>
+    </insert>
+
+</mapper>

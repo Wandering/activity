@@ -23,7 +23,7 @@ spring:
 # Mybatis配置
 mybatis:
     mapperLocations: classpath*:/mybatis/**/**/*.xml
-    typeAliasesPackage: com.power.entity
+    typeAliasesPackage: com.power.yuneng.activity.entity
 
 #logging.level.power.activity=DEBUG
 
