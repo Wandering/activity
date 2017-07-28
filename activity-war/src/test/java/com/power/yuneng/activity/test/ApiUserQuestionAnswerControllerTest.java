@@ -1,6 +1,7 @@
 package com.power.yuneng.activity.test;
 
 import com.alibaba.fastjson.JSON;
+import com.power.yuneng.activity.api.IActivityNotify;
 import com.power.yuneng.activity.entity.dto.UserAnswerDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,5 +76,17 @@ public class ApiUserQuestionAnswerControllerTest {
                 System.out.println(question.getResponse().getContentAsString());
             }
         });
+    }
+
+    @Autowired
+    private IActivityNotify activityNotify;
+    @Test
+    public void testGiveVip() throws Exception {
+        UserAnswerDTO userAnswerDTO = new UserAnswerDTO();
+        userAnswerDTO.setUserId(10L);
+        userAnswerDTO.setQuestionnaireId(1);
+        userAnswerDTO.setActivityId(1);
+        activityNotify.giveBonuses(userAnswerDTO);
+
     }
 }

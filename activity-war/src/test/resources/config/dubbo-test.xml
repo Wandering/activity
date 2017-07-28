@@ -14,11 +14,11 @@
 
 	<!-- 配置服务 -->
 
-	<dubbo:reference id="smsService" interface="com.power.api.ISurveyService" check="false"
-					 timeout="60000"/>
-	<dubbo:reference id="vipService" interface="com.power.api.IVipService" check="false"
-					 timeout="60000"/>
-	<dubbo:reference id="activityService" interface="com.power.api.IActivityService" check="false"
-					 timeout="60000"/>
+	<!--<dubbo:reference id="smsService" interface="com.power.api.ISurveyService" check="false"-->
+					 <!--timeout="60000"/>-->
+	<!--<dubbo:reference id="vipService" interface="com.power.api.IVipService" check="false"-->
+					 <!--timeout="60000"/>-->
+	<!--<dubbo:reference id="activityService" interface="com.power.api.IActivityService" check="false"-->
+					 <!--timeout="60000"/>-->
 
 </beans>

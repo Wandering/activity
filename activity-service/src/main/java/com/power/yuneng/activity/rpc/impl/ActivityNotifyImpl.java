@@ -94,6 +94,8 @@ public class ActivityNotifyImpl implements IActivityNotify{
                     userBonusesVip.setAccountId(userActivity.getUserId());
                     userBonusesVip.setBonusesVipId(bonusesVip.getId());
                     userBonusesVip.setStatus(0);
+                    userBonusesVip.setCreateTime(currTime);
+                    userBonusesVip.setGiveTime(currTime);
                     userBonusesVipService.create(userBonusesVip);
                     activityUser.setUpdateTime(System.currentTimeMillis()/1000);
                     activityUser.setProgress(QusetionProgressEnum.END.getValue());
