@@ -1,11 +1,12 @@
 package com.power.yuneng.activity.entity.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/28.
  */
-public class UserActivityDTO {
+public class UserActivityDTO implements Serializable{
     /** 活动ID */
     private Integer activityId;
     /** 用户bizID == accountId */
