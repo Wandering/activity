@@ -1,0 +1,32 @@
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    profiles: prod
+  redis:
+    host: r-wz9c6872083f2214.redis.rds.aliyuncs.com
+    port: 6379
+    password: Redis2017
+    database: 0
+  datasource:
+      url: jdbc:mysql://rdspower.mysql.rds.aliyuncs.com:3306/sms?autoReconnect=true&zeroDateTimeBehavior=convertToNull
+      username: power_root
+      password: power#root@2017
+      #连接池的配置信息
+      initialSize: 10
+      minIdle: 10
+      maxActive: 100
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # Druid 配置
+      filters: stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
