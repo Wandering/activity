@@ -91,9 +91,9 @@ public class ApiUserQuestionAnswerControllerTest {
         userAnswerDTO.setUniqueKey("powertest");
         userAnswerDTO.setOpenId("oqoGE0UJGJSuFrSbJX-SwcpVhLYY");
         activityNotify.giveBonuses(userAnswerDTO);
-        while (true){
-            System.out.println(123);
-        }
+//        while (true){
+//            System.out.println(123);
+//        }
     }
 
 
