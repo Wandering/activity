@@ -10,6 +10,7 @@ import com.power.yuneng.activity.entity.enums.QusetionProgressEnum;
 import com.power.yuneng.activity.api.IActivityNotify;
 import com.power.yuneng.activity.service.*;
 import com.power.yuneng.activity.service.ex.IUserQuestionAnswerExService;
+import com.power.yuneng.activity.service.ex.IVipExService;
 import com.power.yuneng.user.IVoucherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,8 @@ public class ActivityNotifyImpl implements IActivityNotify{
     private IUserBonusesVipService userBonusesVipService;
     @Autowired
     private IVoucherService voucherService;
+    @Autowired
+    private IVipExService vipExService;
 
     private static final ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(4);
 
@@ -114,9 +117,10 @@ public class ActivityNotifyImpl implements IActivityNotify{
                 }
             }
         }
+        String uniqueKey = userActivity.getUniqueKey();
         scheduledThreadPool.submit(() -> {
-            String tempId = "Ke0iznfYuS_ImrHZk4gKkCX5atgguwEc4Ug-0J1BupI";
-            voucherService.sendTemplateMsg(userActivity.getUniqueKey(),userActivity.getOpenId(),tempId,new ArrayList<>());
+            Map<String,String> msg = vipExService.getSendMsg(uniqueKey,"ACTIVITY_VIP_MSG");
+            voucherService.sendTemplateMsg(userActivity.getUniqueKey(),userActivity.getOpenId(),msg.get("msgId"),new ArrayList<>());
         });
         return true;
     }

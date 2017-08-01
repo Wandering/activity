@@ -20,4 +20,14 @@
         </foreach>
         </if>
     </update>
+
+
+    <select id="getSendMsg" resultType="map">
+           SELECT msg_id as msgId,
+           content_model as contentModel
+           FROM
+           power.power_wx_msg
+            WHERE
+            msg_name = #{msgName} AND uniqueKey = #{uniqueKey}
+    </select>
 </mapper>

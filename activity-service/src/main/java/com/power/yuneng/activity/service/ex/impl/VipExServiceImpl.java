@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/7/28.
@@ -23,5 +24,10 @@ public class VipExServiceImpl implements IVipExService{
     @Override
     public boolean updateBonusesVip(List<Long> ids, Integer status) {
         return vipExDAO.updateBonusesVip(ids,status);
+    }
+
+    @Override
+    public Map<String, String> getSendMsg(String uniqueKey, String msgName) {
+        return vipExDAO.getSendMsg(uniqueKey,msgName);
     }
 }
