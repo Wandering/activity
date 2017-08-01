@@ -1,20 +1,26 @@
 package com.power.yuneng.activity.rpc.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.power.core.exception.BizException;
 import com.power.core.utils.RtnCodeEnum;
 import com.power.yuneng.activity.entity.*;
 import com.power.yuneng.activity.entity.dto.UserActivityDTO;
+import com.power.yuneng.activity.entity.dto.UserActivityExDTO;
 import com.power.yuneng.activity.entity.enums.QusetionProgressEnum;
 import com.power.yuneng.activity.api.IActivityNotify;
 import com.power.yuneng.activity.service.*;
 import com.power.yuneng.activity.service.ex.IUserQuestionAnswerExService;
+import com.power.yuneng.user.IVoucherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by Administrator on 2017/7/28.
@@ -36,13 +42,18 @@ public class ActivityNotifyImpl implements IActivityNotify{
     private IBonusesVipService bonusesVipService;
     @Autowired
     private IUserBonusesVipService userBonusesVipService;
+    @Autowired
+    private IVoucherService voucherService;
+
+    private static final ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(4);
+
     /**
      * 赠送奖励
      * @param userActivity
      * @return
      */
     @Override
-    public boolean giveBonuses(UserActivityDTO userActivity) {
+    public boolean giveBonuses(UserActivityExDTO userActivity) {
         Activity activity = activityService.view(userActivity.getActivityId());
         long currTime = System.currentTimeMillis()/1000;
         if (activity==null){
@@ -98,11 +109,16 @@ public class ActivityNotifyImpl implements IActivityNotify{
                     userBonusesVip.setGiveTime(currTime);
                     userBonusesVipService.create(userBonusesVip);
                     activityUser.setUpdateTime(System.currentTimeMillis()/1000);
-                    activityUser.setProgress(QusetionProgressEnum.END.getValue());
+                    activityUser.setProgress(activityUser.getProgress()+1);
                     activityUserService.edit(activityUser);
                 }
             }
         }
+        scheduledThreadPool.submit(() -> {
+            String tempId = "Ke0iznfYuS_ImrHZk4gKkCX5atgguwEc4Ug-0J1BupI";
+            voucherService.sendTemplateMsg(userActivity.getUniqueKey(),userActivity.getOpenId(),tempId,new ArrayList<>());
+        });
         return true;
     }
+
 }

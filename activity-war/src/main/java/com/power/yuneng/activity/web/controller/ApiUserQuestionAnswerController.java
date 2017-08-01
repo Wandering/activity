@@ -231,9 +231,9 @@ public class ApiUserQuestionAnswerController{
             if (activityUser == null){
                 throw new BizException(RtnCodeEnum.UNKNOW.getValue(),"非法提交");
             }
-            if (activityUser.getProgress()>QusetionProgressEnum.START.getValue()){
-                throw new BizException(RtnCodeEnum.ANSWER_EXIST.getValue(), RtnCodeEnum.ANSWER_EXIST.getDesc());
-            }
+//            if (activityUser.getProgress()>QusetionProgressEnum.START.getValue()){
+//                throw new BizException(RtnCodeEnum.ANSWER_EXIST.getValue(), RtnCodeEnum.ANSWER_EXIST.getDesc());
+//            }
             List<UserQuestionAnswer> userQuestionAnswers = new ArrayList<>();
             for (UserAnswerDTO.Answer answer : userAnswerDTO.getAnswers()){
                 UserQuestionAnswer userQuestionAnswer = new UserQuestionAnswer();

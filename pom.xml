@@ -5,7 +5,7 @@
     <groupId>com.power.yuneng.activity</groupId>
     <artifactId>power-activity</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <modules>
         <module>activity-domain</module>
         <module>activity-service</module>
@@ -16,7 +16,7 @@
 
 
     <properties>
-        <local.version>0.0.2-SNAPSHOT</local.version>
+        <local.version>0.0.3-SNAPSHOT</local.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

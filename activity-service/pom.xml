@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>power-activity</artifactId>
 		<groupId>com.power.yuneng.activity</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
@@ -40,6 +40,18 @@
 			<groupId>com.power.yuneng.activity</groupId>
 			<artifactId>activity-api</artifactId>
 			<version>${local.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.power</groupId>
+			<artifactId>user-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.power</groupId>
+					<artifactId>base-commmon</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
