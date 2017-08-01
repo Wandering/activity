@@ -114,29 +114,91 @@ public class ActivityNotifyImpl implements IActivityNotify{
                     activityUser.setUpdateTime(System.currentTimeMillis()/1000);
                     activityUser.setProgress(activityUser.getProgress()+1);
                     activityUserService.edit(activityUser);
+                    String uniqueKey = userActivity.getUniqueKey();
+                    scheduledThreadPool.submit(() -> {
+                        Map<String,String> msg = vipExService.getSendMsg(uniqueKey,"ACTIVITY_VIP_MSG");
+                        Map<String,Map<String,Object>> sendMap = JSON.parseObject(msg.get("contentModel"),HashMap.class);
+                        List<WxMpTemplateData>  list = new ArrayList<>();
+                        WxMpTemplateData data = null;
+                        Iterator<Map.Entry<String, Map<String,Object>>> $it = sendMap.entrySet().iterator();
+                        while ($it.hasNext()){
+                            Map.Entry<String,Map<String,Object>> it =  $it.next();
+                            String key = it.getKey();
+                            Map<String,Object> values = it.getValue();
+                            data = new WxMpTemplateData();
+                            data.setName(key);
+                            data.setValue(values.get("value").toString());
+                            data.setColor(values.get("color").toString());
+                            list.add(data);
+                        }
+                        voucherService.sendTemplateMsg(userActivity.getUniqueKey(),msg.get("msgId"),userActivity.getOpenId(),list);
+                    });
                 }
             }
         }
-        String uniqueKey = userActivity.getUniqueKey();
-        scheduledThreadPool.submit(() -> {
-            Map<String,String> msg = vipExService.getSendMsg(uniqueKey,"ACTIVITY_VIP_MSG");
-        Map<String,Map<String,Object>> sendMap = JSON.parseObject(msg.get("contentModel"),HashMap.class);
-        List<WxMpTemplateData>  list = new ArrayList<>();
-        WxMpTemplateData data = null;
-        Iterator<Map.Entry<String, Map<String,Object>>> $it = sendMap.entrySet().iterator();
-        while ($it.hasNext()){
-            Map.Entry<String,Map<String,Object>> it =  $it.next();
-            String key = it.getKey();
-            Map<String,Object> values = it.getValue();
-            data = new WxMpTemplateData();
-            data.setName(key);
-            data.setValue(values.get("value").toString());
-            data.setColor(values.get("color").toString());
-            list.add(data);
-        }
-            voucherService.sendTemplateMsg(userActivity.getUniqueKey(),msg.get("msgId"),userActivity.getOpenId(),list);
-        });
+
         return true;
     }
 
+    /**
+     * 是否可以领取奖励
+     * @param userActivity
+     * @return
+     */
+    @Override
+    public boolean hasGiveBonuses(UserActivityExDTO userActivity) {
+        Activity activity = activityService.view(userActivity.getActivityId());
+        long currTime = System.currentTimeMillis()/1000;
+        if (activity==null){
+            throw new BizException(RtnCodeEnum.ACTIVITY_NOT_EXIST.getValue(), RtnCodeEnum.ACTIVITY_NOT_EXIST.getDesc());
+        }
+        if (activity.getStartTime()>currTime){
+            throw new BizException(RtnCodeEnum.ACTIVITY_NOT_START.getValue(), RtnCodeEnum.ACTIVITY_NOT_START.getDesc());
+        }
+        if (activity.getEndTime()<currTime){
+            throw new BizException(RtnCodeEnum.ACTIVITY_END.getValue(), RtnCodeEnum.ACTIVITY_END.getDesc());
+        }
+        if (userActivity==null){
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "参数为空");
+        }
+        if (userActivity.getUserId()==null){
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "用户ID为空");
+        }
+        if (userActivity.getQuestionnaireId()==null){
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷编号为空");
+        }
+        UserQuestion userQuestion = userQuestionService.view(userActivity.getQuestionnaireId());
+        if (userQuestion == null){
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "问卷不存在");
+        }
+        if (userActivity.getActivityId()==null){
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(), "活动编码为空");
+        }
+
+        Map<String,Object> map = new HashMap<>();
+        map .put("accountId",userActivity.getUserId());
+        map .put("activityId",userActivity.getActivityId());
+        ActivityUser activityUser = activityUserService.viewOne(map);
+        if (activityUser == null){
+            throw new BizException(RtnCodeEnum.UNKNOW.getValue(),"非法提交");
+        }
+        //判断当前活动奖励
+        if (activity.getBonuses()==1){
+            BonusesVip bonusesVip = bonusesVipService.view(activity.getContent());
+            if (bonusesVip.getType()==1){
+
+            }else if (bonusesVip.getType()==2){
+                //延时
+                map = new HashMap<>();
+                map.put("accountId",userActivity.getUserId());
+                map.put("bonusesVipId",bonusesVip.getId());
+                UserBonusesVip userBonusesVip = userBonusesVipService.viewOne(map);
+                if (userBonusesVip ==null){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
