@@ -15,7 +15,9 @@
 
 	<!-- 配置服务 -->
 	<dubbo:service id="activityNotify" interface="com.power.yuneng.activity.api.IActivityNotify"  ref="ActivityNotifyImpl" timeout="60000" retries="0" />
+
 	<!--<dubbo:service id="activityService" interface="com.power.yuneng.activity.api.IActivityService"  ref="ActivityServiceImpl" timeout="60000" retries="0" />-->
 	<!--<dubbo:service id="surveyService" interface="com.power.yuneng.activity.api.ISurveyService"  ref="SurveyServiceImpl" timeout="60000" retries="0" />-->
-
+	<dubbo:reference id="voucherService" interface="com.power.yuneng.user.IVoucherService" check="false"
+					 timeout="60000"/>
 </beans>
