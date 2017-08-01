@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.power.yuneng.activity</groupId>
             <artifactId>activity-service</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>${local.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
