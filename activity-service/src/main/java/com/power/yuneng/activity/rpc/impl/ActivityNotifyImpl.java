@@ -12,6 +12,7 @@ import com.power.yuneng.activity.service.*;
 import com.power.yuneng.activity.service.ex.IUserQuestionAnswerExService;
 import com.power.yuneng.activity.service.ex.IVipExService;
 import com.power.yuneng.user.IVoucherService;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -118,10 +120,11 @@ public class ActivityNotifyImpl implements IActivityNotify{
             }
         }
         String uniqueKey = userActivity.getUniqueKey();
-        scheduledThreadPool.submit(() -> {
+//        scheduledThreadPool.submit(() -> {
             Map<String,String> msg = vipExService.getSendMsg(uniqueKey,"ACTIVITY_VIP_MSG");
-            voucherService.sendTemplateMsg(userActivity.getUniqueKey(),userActivity.getOpenId(),msg.get("msgId"),new ArrayList<>());
-        });
+            List<WxMpTemplateData>  list = JSONArray.parseArray(msg.get("contentModel").toString(),WxMpTemplateData.class);
+            voucherService.sendTemplateMsg(userActivity.getUniqueKey(),msg.get("msgId"),userActivity.getOpenId(),list);
+//        });
         return true;
     }
 
