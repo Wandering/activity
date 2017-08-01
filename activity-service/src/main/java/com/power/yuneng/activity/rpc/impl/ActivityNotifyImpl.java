@@ -1,5 +1,6 @@
 package com.power.yuneng.activity.rpc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.power.core.exception.BizException;
 import com.power.core.utils.RtnCodeEnum;
@@ -18,10 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -120,11 +118,24 @@ public class ActivityNotifyImpl implements IActivityNotify{
             }
         }
         String uniqueKey = userActivity.getUniqueKey();
-//        scheduledThreadPool.submit(() -> {
+        scheduledThreadPool.submit(() -> {
             Map<String,String> msg = vipExService.getSendMsg(uniqueKey,"ACTIVITY_VIP_MSG");
-            List<WxMpTemplateData>  list = JSONArray.parseArray(msg.get("contentModel").toString(),WxMpTemplateData.class);
+        Map<String,Map<String,Object>> sendMap = JSON.parseObject(msg.get("contentModel"),HashMap.class);
+        List<WxMpTemplateData>  list = new ArrayList<>();
+        WxMpTemplateData data = null;
+        Iterator<Map.Entry<String, Map<String,Object>>> $it = sendMap.entrySet().iterator();
+        while ($it.hasNext()){
+            Map.Entry<String,Map<String,Object>> it =  $it.next();
+            String key = it.getKey();
+            Map<String,Object> values = it.getValue();
+            data = new WxMpTemplateData();
+            data.setName(key);
+            data.setValue(values.get("value").toString());
+            data.setColor(values.get("color").toString());
+            list.add(data);
+        }
             voucherService.sendTemplateMsg(userActivity.getUniqueKey(),msg.get("msgId"),userActivity.getOpenId(),list);
-//        });
+        });
         return true;
     }
 
