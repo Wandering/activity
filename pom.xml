@@ -65,6 +65,17 @@
 
     <repositories>
         <repository>
+            <id>power</id>
+            <name>power</name>
+            <url>http://192.168.10.49:8081/repository/maven-public/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>public</id>
             <name>aliyun nexus</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
@@ -80,17 +91,7 @@
             <name>maven2 nexus</name>
             <url>http://repo.maven.apache.org/maven2</url>
         </repository>
-        <repository>
-            <id>power</id>
-            <name>power</name>
-            <url>http://192.168.10.49:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>
