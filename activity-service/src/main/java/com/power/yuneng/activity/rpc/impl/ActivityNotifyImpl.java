@@ -185,8 +185,10 @@ public class ActivityNotifyImpl implements IActivityNotify{
         }
         //判断当前活动奖励是否已经发放或正在发放
         if (activityUser.getProgress()>=QusetionProgressEnum.END_ASYNC.getValue()){
+            logger.debug("奖励已经发放或正在发放！");
             return false;
         }
+        logger.debug("奖励没有发放");
         return true;
     }
 }
