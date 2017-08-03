@@ -183,7 +183,7 @@ public class ActivityNotifyImpl implements IActivityNotify{
         map .put("activityId",userActivity.getActivityId());
         ActivityUser activityUser = activityUserService.viewOne(map);
         if (activityUser == null){
-            throw new BizException(RtnCodeEnum.UNKNOW.getValue(),"非法提交");
+            return false;
         }
         //判断当前活动奖励是否已经发放或正在发放
         if (activityUser.getProgress()>=QusetionProgressEnum.END_ASYNC.getValue()){
