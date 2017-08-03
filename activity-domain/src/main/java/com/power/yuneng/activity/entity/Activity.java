@@ -8,20 +8,26 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-07-28 15:06:12 $ 
+ * $Id:  2017-08-03 18:24:58 $ 
  */
 package com.power.yuneng.activity.entity;
-import com.power.core.domain.BaseDomain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.power.core.domain.BaseDomain;;
 
 import java.util.*;
 
-public class Activity extends BaseDomain<Integer> {
+public class Activity extends BaseDomain<Integer>{
     /** 活动名称 */
     private String name;
+    /** 描述 */
+    private String desc;
+    /** 活动页面URL */
+    private String url;
+    /** 图片地址 */
+    private String imageUrl;
     /** 活动类型 */
     private Integer type;
     /** 奖励 */
@@ -41,6 +47,27 @@ public class Activity extends BaseDomain<Integer> {
 
     public String getName() {
         return this.name;
+    }
+    public void setDesc(String value) {
+        this.desc = value;
+    }
+
+    public String getDesc() {
+        return this.desc;
+    }
+    public void setUrl(String value) {
+        this.url = value;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+    public void setImageUrl(String value) {
+        this.imageUrl = value;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
     }
     public void setType(Integer value) {
         this.type = value;
@@ -82,6 +109,9 @@ public class Activity extends BaseDomain<Integer> {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
 			.append("Name",getName())
+			.append("Desc",getDesc())
+			.append("Url",getUrl())
+			.append("ImageUrl",getImageUrl())
 			.append("Type",getType())
 			.append("Bonuses",getBonuses())
 			.append("Content",getContent())

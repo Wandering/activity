@@ -27,6 +27,9 @@ D
     <sql id="Base_Column_List">
         id as id ,
         name as name ,
+        desc as desc ,
+        url as url ,
+        imageUrl as imageUrl ,
         type as type ,
         bonuses as bonuses ,
         content as content ,
@@ -39,6 +42,9 @@ D
     <insert id="insert" parameterType="Activity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO power_activity (
         name,
+        desc,
+        url,
+        imageUrl,
         type,
         bonuses,
         content,
@@ -46,6 +52,9 @@ D
         endTime
         ) VALUES (
         #{name},
+        #{desc},
+        #{url},
+        #{imageUrl},
         #{type},
         #{bonuses},
         #{content},
@@ -58,6 +67,9 @@ D
     <insert id="insertMap" >
         INSERT INTO power_activity (
         name,
+        desc,
+        url,
+        imageUrl,
         type,
         bonuses,
         content,
@@ -65,6 +77,9 @@ D
         endTime
                 ) VALUES (
         #{map.name},
+        #{map.desc},
+        #{map.url},
+        #{map.imageUrl},
         #{map.type},
         #{map.bonuses},
         #{map.content},
@@ -83,6 +98,15 @@ D
         <trim prefix="SET" suffixOverrides=",">
             <if test="name!=null">
                 name = #{name},
+            </if>
+            <if test="desc!=null">
+                desc = #{desc},
+            </if>
+            <if test="url!=null">
+                url = #{url},
+            </if>
+            <if test="imageUrl!=null">
+                imageUrl = #{imageUrl},
             </if>
             <if test="type!=null">
                 type = #{type},
@@ -110,6 +134,15 @@ D
             <if test="map.name!=null">
                 name = #{map.name},
             </if>
+            <if test="map.desc!=null">
+                desc = #{map.desc},
+            </if>
+            <if test="map.url!=null">
+                url = #{map.url},
+            </if>
+            <if test="map.imageUrl!=null">
+                imageUrl = #{map.imageUrl},
+            </if>
             <if test="map.type!=null">
                 type = #{map.type},
             </if>
@@ -136,6 +169,15 @@ D
             <if test="update.name!=null">
                 name = #{update.name},
             </if>
+            <if test="update.desc!=null">
+                desc = #{update.desc},
+            </if>
+            <if test="update.url!=null">
+                url = #{update.url},
+            </if>
+            <if test="update.imageUrl!=null">
+                imageUrl = #{update.imageUrl},
+            </if>
             <if test="update.type!=null">
                 type = #{update.type},
             </if>
@@ -160,6 +202,15 @@ D
         <if test="condition.name!=null">
             AND name = #{condition.name}
         </if>
+        <if test="condition.desc!=null">
+            AND desc = #{condition.desc}
+        </if>
+        <if test="condition.url!=null">
+            AND url = #{condition.url}
+        </if>
+        <if test="condition.imageUrl!=null">
+            AND imageUrl = #{condition.imageUrl}
+        </if>
         <if test="condition.type!=null">
             AND type = #{condition.type}
         </if>
@@ -183,6 +234,15 @@ D
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.name!=null">
                 name = #{update.name},
+            </if>
+            <if test="update.desc!=null">
+                desc = #{update.desc},
+            </if>
+            <if test="update.url!=null">
+                url = #{update.url},
+            </if>
+            <if test="update.imageUrl!=null">
+                imageUrl = #{update.imageUrl},
             </if>
             <if test="update.type!=null">
                 type = #{update.type},
@@ -212,6 +272,9 @@ ${nativeSql}        </if>
         UPDATE power_activity
         <trim prefix="SET" suffixOverrides=",">
             name = #{name},
+            desc = #{desc},
+            url = #{url},
+            imageUrl = #{imageUrl},
             type = #{type},
             bonuses = #{bonuses},
             content = #{content},
@@ -249,6 +312,15 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.name!=null">
                     , name
+                </if>
+                <if test="selector.desc!=null">
+                    , desc
+                </if>
+                <if test="selector.url!=null">
+                    , url
+                </if>
+                <if test="selector.imageUrl!=null">
+                    , imageUrl
                 </if>
                 <if test="selector.type!=null">
                     , type
@@ -303,6 +375,54 @@ ${nativeSql}        </if>
             <if test="condition.name.op=='in'">
                 ${condition.groupOp}   name  ${condition.name.op}
                 <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.desc!=null">
+
+            <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
+                AND   desc  ${condition.desc.op} #{condition.desc.data}
+            </if>
+            <if test="condition.desc.op=='like'">
+                AND desc like CONCAT('%', #{condition.desc.data} , '%')
+            </if>
+            <if test="condition.desc.op=='leftlike'">
+                AND desc like CONCAT(#{condition.desc.data} , '%')
+            </if>
+            <if test="condition.desc.op=='in'">
+                ${condition.groupOp}   desc  ${condition.desc.op}
+                <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.url!=null">
+
+            <if test="condition.url.op!='in' and condition.url.op!='like' and condition.url.op!='leftlike'">
+                AND   url  ${condition.url.op} #{condition.url.data}
+            </if>
+            <if test="condition.url.op=='like'">
+                AND url like CONCAT('%', #{condition.url.data} , '%')
+            </if>
+            <if test="condition.url.op=='leftlike'">
+                AND url like CONCAT(#{condition.url.data} , '%')
+            </if>
+            <if test="condition.url.op=='in'">
+                ${condition.groupOp}   url  ${condition.url.op}
+                <foreach collection="condition.url.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.imageUrl!=null">
+
+            <if test="condition.imageUrl.op!='in' and condition.imageUrl.op!='like' and condition.imageUrl.op!='leftlike'">
+                AND   imageUrl  ${condition.imageUrl.op} #{condition.imageUrl.data}
+            </if>
+            <if test="condition.imageUrl.op=='like'">
+                AND imageUrl like CONCAT('%', #{condition.imageUrl.data} , '%')
+            </if>
+            <if test="condition.imageUrl.op=='leftlike'">
+                AND imageUrl like CONCAT(#{condition.imageUrl.data} , '%')
+            </if>
+            <if test="condition.imageUrl.op=='in'">
+                ${condition.groupOp}   imageUrl  ${condition.imageUrl.op}
+                <foreach collection="condition.imageUrl.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.type!=null">
@@ -406,6 +526,15 @@ ${nativeSql}        </if>
                 <if test="selector.name!=null">
                     , name
                 </if>
+                <if test="selector.desc!=null">
+                    , desc
+                </if>
+                <if test="selector.url!=null">
+                    , url
+                </if>
+                <if test="selector.imageUrl!=null">
+                    , imageUrl
+                </if>
                 <if test="selector.type!=null">
                     , type
                 </if>
@@ -450,6 +579,15 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.name!=null">
                     , name
+                </if>
+                <if test="selector.desc!=null">
+                    , desc
+                </if>
+                <if test="selector.url!=null">
+                    , url
+                </if>
+                <if test="selector.imageUrl!=null">
+                    , imageUrl
                 </if>
                 <if test="selector.type!=null">
                     , type
@@ -504,6 +642,54 @@ ${nativeSql}        </if>
             <if test="condition.name.op=='in'">
                 ${condition.groupOp}   name  ${condition.name.op}
                 <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.desc!=null">
+
+            <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
+                ${condition.groupOp}   desc  ${condition.desc.op} #{condition.desc.data}
+            </if>
+            <if test="condition.desc.op=='like'">
+                AND desc like CONCAT('%', #{condition.desc.data} , '%')
+            </if>
+            <if test="condition.desc.op=='leftlike'">
+                AND desc like CONCAT(#{condition.desc.data} , '%')
+            </if>
+            <if test="condition.desc.op=='in'">
+                ${condition.groupOp}   desc  ${condition.desc.op}
+                <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.url!=null">
+
+            <if test="condition.url.op!='in' and condition.url.op!='like' and condition.url.op!='leftlike'">
+                ${condition.groupOp}   url  ${condition.url.op} #{condition.url.data}
+            </if>
+            <if test="condition.url.op=='like'">
+                AND url like CONCAT('%', #{condition.url.data} , '%')
+            </if>
+            <if test="condition.url.op=='leftlike'">
+                AND url like CONCAT(#{condition.url.data} , '%')
+            </if>
+            <if test="condition.url.op=='in'">
+                ${condition.groupOp}   url  ${condition.url.op}
+                <foreach collection="condition.url.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.imageUrl!=null">
+
+            <if test="condition.imageUrl.op!='in' and condition.imageUrl.op!='like' and condition.imageUrl.op!='leftlike'">
+                ${condition.groupOp}   imageUrl  ${condition.imageUrl.op} #{condition.imageUrl.data}
+            </if>
+            <if test="condition.imageUrl.op=='like'">
+                AND imageUrl like CONCAT('%', #{condition.imageUrl.data} , '%')
+            </if>
+            <if test="condition.imageUrl.op=='leftlike'">
+                AND imageUrl like CONCAT(#{condition.imageUrl.data} , '%')
+            </if>
+            <if test="condition.imageUrl.op=='in'">
+                ${condition.groupOp}   imageUrl  ${condition.imageUrl.op}
+                <foreach collection="condition.imageUrl.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.type!=null">
@@ -606,6 +792,15 @@ ${nativeSql}        </if>
                     <if test="selector.name!=null">
                         , name
                     </if>
+                    <if test="selector.desc!=null">
+                        , desc
+                    </if>
+                    <if test="selector.url!=null">
+                        , url
+                    </if>
+                    <if test="selector.imageUrl!=null">
+                        , imageUrl
+                    </if>
                     <if test="selector.type!=null">
                         , type
                     </if>
@@ -659,6 +854,15 @@ ${executeSqlCount}        </select>
                 <if test="selector.name!=null">
                     , name
                 </if>
+                <if test="selector.desc!=null">
+                    , desc
+                </if>
+                <if test="selector.url!=null">
+                    , url
+                </if>
+                <if test="selector.imageUrl!=null">
+                    , imageUrl
+                </if>
                 <if test="selector.type!=null">
                     , type
                 </if>
@@ -711,6 +915,54 @@ ${executeSqlCount}        </select>
             <if test="condition.name.op=='in'">
                 ${condition.groupOp}   name  ${condition.name.op}
                 <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.desc!=null">
+
+            <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
+                ${condition.groupOp}   desc  ${condition.desc.op} #{condition.desc.data}
+            </if>
+            <if test="condition.desc.op=='like'">
+                AND desc like CONCAT('%', #{condition.desc.data} , '%')
+            </if>
+            <if test="condition.desc.op=='leftlike'">
+                AND desc like CONCAT(#{condition.desc.data} , '%')
+            </if>
+            <if test="condition.desc.op=='in'">
+                ${condition.groupOp}   desc  ${condition.desc.op}
+                <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.url!=null">
+
+            <if test="condition.url.op!='in' and condition.url.op!='like' and condition.url.op!='leftlike'">
+                ${condition.groupOp}   url  ${condition.url.op} #{condition.url.data}
+            </if>
+            <if test="condition.url.op=='like'">
+                AND url like CONCAT('%', #{condition.url.data} , '%')
+            </if>
+            <if test="condition.url.op=='leftlike'">
+                AND url like CONCAT(#{condition.url.data} , '%')
+            </if>
+            <if test="condition.url.op=='in'">
+                ${condition.groupOp}   url  ${condition.url.op}
+                <foreach collection="condition.url.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.imageUrl!=null">
+
+            <if test="condition.imageUrl.op!='in' and condition.imageUrl.op!='like' and condition.imageUrl.op!='leftlike'">
+                ${condition.groupOp}   imageUrl  ${condition.imageUrl.op} #{condition.imageUrl.data}
+            </if>
+            <if test="condition.imageUrl.op=='like'">
+                AND imageUrl like CONCAT('%', #{condition.imageUrl.data} , '%')
+            </if>
+            <if test="condition.imageUrl.op=='leftlike'">
+                AND imageUrl like CONCAT(#{condition.imageUrl.data} , '%')
+            </if>
+            <if test="condition.imageUrl.op=='in'">
+                ${condition.groupOp}   imageUrl  ${condition.imageUrl.op}
+                <foreach collection="condition.imageUrl.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.type!=null">
@@ -816,6 +1068,15 @@ ${executeSqlCount}        </select>
                 <if test="selector.name!=null">
                     , name
                 </if>
+                <if test="selector.desc!=null">
+                    , desc
+                </if>
+                <if test="selector.url!=null">
+                    , url
+                </if>
+                <if test="selector.imageUrl!=null">
+                    , imageUrl
+                </if>
                 <if test="selector.type!=null">
                     , type
                 </if>
@@ -885,6 +1146,54 @@ ${nativeSql}        </if>
                 <if test="condition.name.op=='in'">
                     ${condition.groupOp}   name  ${condition.name.op}
                     <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.desc!=null">
+
+                <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
+                    ${condition.groupOp}   desc  ${condition.desc.op} #{condition.desc.data}
+                </if>
+                <if test="condition.desc.op=='like'">
+                    AND desc like CONCAT('%', #{condition.desc.data} , '%')
+                </if>
+                <if test="condition.desc.op=='leftlike'">
+                    AND desc like CONCAT(#{condition.desc.data} , '%')
+                </if>
+                <if test="condition.desc.op=='in'">
+                    ${condition.groupOp}   desc  ${condition.desc.op}
+                    <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.url!=null">
+
+                <if test="condition.url.op!='in' and condition.url.op!='like' and condition.url.op!='leftlike'">
+                    ${condition.groupOp}   url  ${condition.url.op} #{condition.url.data}
+                </if>
+                <if test="condition.url.op=='like'">
+                    AND url like CONCAT('%', #{condition.url.data} , '%')
+                </if>
+                <if test="condition.url.op=='leftlike'">
+                    AND url like CONCAT(#{condition.url.data} , '%')
+                </if>
+                <if test="condition.url.op=='in'">
+                    ${condition.groupOp}   url  ${condition.url.op}
+                    <foreach collection="condition.url.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.imageUrl!=null">
+
+                <if test="condition.imageUrl.op!='in' and condition.imageUrl.op!='like' and condition.imageUrl.op!='leftlike'">
+                    ${condition.groupOp}   imageUrl  ${condition.imageUrl.op} #{condition.imageUrl.data}
+                </if>
+                <if test="condition.imageUrl.op=='like'">
+                    AND imageUrl like CONCAT('%', #{condition.imageUrl.data} , '%')
+                </if>
+                <if test="condition.imageUrl.op=='leftlike'">
+                    AND imageUrl like CONCAT(#{condition.imageUrl.data} , '%')
+                </if>
+                <if test="condition.imageUrl.op=='in'">
+                    ${condition.groupOp}   imageUrl  ${condition.imageUrl.op}
+                    <foreach collection="condition.imageUrl.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
             <if test="condition.type!=null">
@@ -996,6 +1305,15 @@ ${nativeSql}        </if>
             </if>
             <if test="condition.name!=null">
                 AND name = #{condition.name}
+            </if>
+            <if test="condition.desc!=null">
+                AND desc = #{condition.desc}
+            </if>
+            <if test="condition.url!=null">
+                AND url = #{condition.url}
+            </if>
+            <if test="condition.imageUrl!=null">
+                AND imageUrl = #{condition.imageUrl}
             </if>
             <if test="condition.type!=null">
                 AND type = #{condition.type}

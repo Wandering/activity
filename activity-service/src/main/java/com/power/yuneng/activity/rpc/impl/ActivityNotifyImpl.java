@@ -141,6 +141,8 @@ public class ActivityNotifyImpl implements IActivityNotify{
         return true;
     }
 
+
+
     /**
      * 是否可以领取奖励
      * @param userActivity
@@ -190,5 +192,16 @@ public class ActivityNotifyImpl implements IActivityNotify{
         }
         logger.debug("奖励没有发放");
         return true;
+    }
+
+
+    /**
+     * 查询当前正在进行的活动
+     *
+     * @return
+     */
+    @Override
+    public Activity getActivityById(Integer id,String uniqueKey) {
+        return activityService.view(id);
     }
 }

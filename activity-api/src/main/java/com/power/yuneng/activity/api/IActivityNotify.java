@@ -1,5 +1,6 @@
 package com.power.yuneng.activity.api;
 
+import com.power.yuneng.activity.entity.Activity;
 import com.power.yuneng.activity.entity.dto.UserActivityDTO;
 import com.power.yuneng.activity.entity.dto.UserActivityExDTO;
 
@@ -14,6 +15,11 @@ public interface IActivityNotify {
      */
     boolean giveBonuses(UserActivityExDTO userActivity);
 
+    /**
+     * 查询当前正在进行的活动
+     * @return
+     */
+    Activity getActivityById(Integer id,String uniqueKey);
     /**
      * 是否可以领取奖励
      * @param userActivity
