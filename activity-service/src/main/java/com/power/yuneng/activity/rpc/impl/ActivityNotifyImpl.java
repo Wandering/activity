@@ -108,11 +108,12 @@ public class ActivityNotifyImpl implements IActivityNotify{
                     userBonusesVip.setAccountId(userActivity.getUserId());
                     userBonusesVip.setBonusesVipId(bonusesVip.getId());
                     userBonusesVip.setStatus(0);
+                    userBonusesVip.setActivityId(userActivity.getActivityId());
                     userBonusesVip.setCreateTime(currTime);
                     userBonusesVip.setGiveTime(currTime);
                     userBonusesVipService.create(userBonusesVip);
                     activityUser.setUpdateTime(System.currentTimeMillis()/1000);
-                    activityUser.setProgress(activityUser.getProgress()+1);
+                    activityUser.setProgress(QusetionProgressEnum.END_ASYNC.getValue());
                     activityUserService.edit(activityUser);
                     String uniqueKey = userActivity.getUniqueKey();
                     scheduledThreadPool.submit(() -> {
@@ -182,23 +183,10 @@ public class ActivityNotifyImpl implements IActivityNotify{
         if (activityUser == null){
             throw new BizException(RtnCodeEnum.UNKNOW.getValue(),"非法提交");
         }
-        //判断当前活动奖励
-        if (activity.getBonuses()==1){
-            BonusesVip bonusesVip = bonusesVipService.view(activity.getContent());
-            if (bonusesVip.getType()==1){
-
-            }else if (bonusesVip.getType()==2){
-                //延时
-                map = new HashMap<>();
-                map.put("accountId",userActivity.getUserId());
-                map.put("bonusesVipId",bonusesVip.getId());
-                UserBonusesVip userBonusesVip = userBonusesVipService.viewOne(map);
-                if (userBonusesVip ==null){
-                    return false;
-                }
-            }
+        //判断当前活动奖励是否已经发放或正在发放
+        if (activityUser.getProgress()>=QusetionProgressEnum.END_ASYNC.getValue()){
+            return false;
         }
-
         return true;
     }
 }

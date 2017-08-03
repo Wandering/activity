@@ -8,7 +8,7 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-07-28 19:50:50 $ 
+ * $Id:  2017-08-03 11:28:36 $ 
  */
 package com.power.yuneng.activity.entity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -22,6 +22,8 @@ import java.util.*;
 public class UserBonusesVip extends BaseDomain<Long>{
     /** 用户业务ID */
     private Long accountId;
+    /** 活动ID */
+    private Integer activityId;
     /** 赠送用户vip列 */
     private Integer bonusesVipId;
     /** 创建时间(1234567890)unix标准时间 */
@@ -39,6 +41,13 @@ public class UserBonusesVip extends BaseDomain<Long>{
 
     public Long getAccountId() {
         return this.accountId;
+    }
+    public void setActivityId(Integer value) {
+        this.activityId = value;
+    }
+
+    public Integer getActivityId() {
+        return this.activityId;
     }
     public void setBonusesVipId(Integer value) {
         this.bonusesVipId = value;
@@ -74,6 +83,7 @@ public class UserBonusesVip extends BaseDomain<Long>{
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
 			.append("AccountId",getAccountId())
+			.append("ActivityId",getActivityId())
 			.append("BonusesVipId",getBonusesVipId())
 			.append("CreateTime",getCreateTime())
 			.append("GiveTime",getGiveTime())

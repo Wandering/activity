@@ -22,8 +22,13 @@ public class VipExServiceImpl implements IVipExService{
     }
 
     @Override
-    public boolean updateBonusesVip(List<Long> ids, Integer status) {
-        return vipExDAO.updateBonusesVip(ids,status);
+    public boolean updateBonusesVip(List<Long> ids,Integer activityId, Integer status) {
+        return vipExDAO.updateBonusesVip(ids,activityId,status);
+    }
+
+    @Override
+    public boolean updateActivityUser(Integer currProgress, Integer nextProgress, Integer activityId) {
+        return vipExDAO.updateActivityUser(currProgress,nextProgress,activityId);
     }
 
     @Override

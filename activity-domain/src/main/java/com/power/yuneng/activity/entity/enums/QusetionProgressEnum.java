@@ -5,6 +5,7 @@ package com.power.yuneng.activity.entity.enums;
  */
 public enum  QusetionProgressEnum {
     START(0),
+    END_ASYNC(99),
     END(100),
     ;
     private final int value;

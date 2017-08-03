@@ -1,9 +1,13 @@
 package com.power.yuneng.activity.common;
 
+import com.alibaba.fastjson.JSON;
 import com.power.core.cache.IRedisRepository;
 import com.power.core.cache.RedisRepository;
+import com.power.yuneng.activity.entity.ActivityUser;
 import com.power.yuneng.activity.entity.BonusesVip;
 import com.power.yuneng.activity.entity.UserBonusesVip;
+import com.power.yuneng.activity.entity.enums.QusetionProgressEnum;
+import com.power.yuneng.activity.service.IActivityUserService;
 import com.power.yuneng.activity.service.IBonusesVipService;
 import com.power.yuneng.activity.service.IUserBonusesVipService;
 import com.power.yuneng.activity.service.ex.IVipExService;
@@ -32,6 +36,8 @@ public class Scheduler {
     private IBonusesVipService bonusesVipService;
     @Autowired
     private IUserBonusesVipService userBonusesVipService;
+    @Autowired
+    private IActivityUserService activityUserService;
     private static final String flag = "giveVip";
     @Scheduled(cron = "0 0 0 ? * ? ") //每天零点执行一次
     public void statusGiveVip() {
@@ -41,7 +47,7 @@ public class Scheduler {
                     repository.set(flag,true,10, TimeUnit.MINUTES);
                     Map<Integer,List<UserBonusesVip>> map = new HashMap<>();
                     Map<String,Object> params = new HashMap<>();
-                    params.put("status",1);
+                    params.put("status",0);
                     List<UserBonusesVip> userBonusesVips = userBonusesVipService.viewList(params);
                     Iterator<UserBonusesVip> iterator = userBonusesVips.iterator();
                     while (iterator.hasNext()){
@@ -66,10 +72,13 @@ public class Scheduler {
                         for (UserBonusesVip userBonusesVip : listValue) {
                             ids.add(userBonusesVip.getAccountId());
                         }
+                        Integer activityId = userBonusesVips.get(0).getActivityId();
+//                        Integer currProgress,Integer nextProgress,Integer activityId
                         vipExService.giveVip(ids,bonusesVip.getVipId(),bonusesVip.getStartTime(),bonusesVip.getEndTime());
-                        vipExService.updateBonusesVip(ids,1);
+                        vipExService.updateBonusesVip(ids,activityId,1);
+                        vipExService.updateActivityUser(QusetionProgressEnum.END.getValue(), QusetionProgressEnum.END.getValue(),activityId);
+                        logger.info("奖励发放完成!\n活动编号:{}\nids:{}\n时间:{}",activityId, JSON.toJSONString(ids),System.currentTimeMillis());
                     }
-
                 }
             }
         }

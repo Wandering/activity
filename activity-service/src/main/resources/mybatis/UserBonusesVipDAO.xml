@@ -27,6 +27,7 @@ D
     <sql id="Base_Column_List">
         id as id ,
         accountId as accountId ,
+        activityId as activityId ,
         bonusesVipId as bonusesVipId ,
         createTime as createTime ,
         giveTime as giveTime ,
@@ -38,12 +39,14 @@ D
     <insert id="insert" parameterType="UserBonusesVip" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO power_user_bonuses_vip (
         accountId,
+        activityId,
         bonusesVipId,
         createTime,
         giveTime,
         status
         ) VALUES (
         #{accountId},
+        #{activityId},
         #{bonusesVipId},
         #{createTime},
         #{giveTime},
@@ -55,12 +58,14 @@ D
     <insert id="insertMap" >
         INSERT INTO power_user_bonuses_vip (
         accountId,
+        activityId,
         bonusesVipId,
         createTime,
         giveTime,
         status
                 ) VALUES (
         #{map.accountId},
+        #{map.activityId},
         #{map.bonusesVipId},
         #{map.createTime},
         #{map.giveTime},
@@ -78,6 +83,9 @@ D
         <trim prefix="SET" suffixOverrides=",">
             <if test="accountId!=null">
                 accountId = #{accountId},
+            </if>
+            <if test="activityId!=null">
+                activityId = #{activityId},
             </if>
             <if test="bonusesVipId!=null">
                 bonusesVipId = #{bonusesVipId},
@@ -102,6 +110,9 @@ D
             <if test="map.accountId!=null">
                 accountId = #{map.accountId},
             </if>
+            <if test="map.activityId!=null">
+                activityId = #{map.activityId},
+            </if>
             <if test="map.bonusesVipId!=null">
                 bonusesVipId = #{map.bonusesVipId},
             </if>
@@ -125,6 +136,9 @@ D
             <if test="update.accountId!=null">
                 accountId = #{update.accountId},
             </if>
+            <if test="update.activityId!=null">
+                activityId = #{update.activityId},
+            </if>
             <if test="update.bonusesVipId!=null">
                 bonusesVipId = #{update.bonusesVipId},
             </if>
@@ -146,6 +160,9 @@ D
         <if test="condition.accountId!=null">
             AND accountId = #{condition.accountId}
         </if>
+        <if test="condition.activityId!=null">
+            AND activityId = #{condition.activityId}
+        </if>
         <if test="condition.bonusesVipId!=null">
             AND bonusesVipId = #{condition.bonusesVipId}
         </if>
@@ -166,6 +183,9 @@ D
         <trim prefix="SET" suffixOverrides=",">
             <if test="update.accountId!=null">
                 accountId = #{update.accountId},
+            </if>
+            <if test="update.activityId!=null">
+                activityId = #{update.activityId},
             </if>
             <if test="update.bonusesVipId!=null">
                 bonusesVipId = #{update.bonusesVipId},
@@ -192,6 +212,7 @@ ${nativeSql}        </if>
         UPDATE power_user_bonuses_vip
         <trim prefix="SET" suffixOverrides=",">
             accountId = #{accountId},
+            activityId = #{activityId},
             bonusesVipId = #{bonusesVipId},
             createTime = #{createTime},
             giveTime = #{giveTime},
@@ -228,6 +249,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.accountId!=null">
                     , accountId
+                </if>
+                <if test="selector.activityId!=null">
+                    , activityId
                 </if>
                 <if test="selector.bonusesVipId!=null">
                     , bonusesVipId
@@ -279,6 +303,22 @@ ${nativeSql}        </if>
             <if test="condition.accountId.op=='in'">
                 ${condition.groupOp}   accountId  ${condition.accountId.op}
                 <foreach collection="condition.accountId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.activityId!=null">
+
+            <if test="condition.activityId.op!='in' and condition.activityId.op!='like' and condition.activityId.op!='leftlike'">
+                AND   activityId  ${condition.activityId.op} #{condition.activityId.data}
+            </if>
+            <if test="condition.activityId.op=='like'">
+                AND activityId like CONCAT('%', #{condition.activityId.data} , '%')
+            </if>
+            <if test="condition.activityId.op=='leftlike'">
+                AND activityId like CONCAT(#{condition.activityId.data} , '%')
+            </if>
+            <if test="condition.activityId.op=='in'">
+                ${condition.groupOp}   activityId  ${condition.activityId.op}
+                <foreach collection="condition.activityId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.bonusesVipId!=null">
@@ -366,6 +406,9 @@ ${nativeSql}        </if>
                 <if test="selector.accountId!=null">
                     , accountId
                 </if>
+                <if test="selector.activityId!=null">
+                    , activityId
+                </if>
                 <if test="selector.bonusesVipId!=null">
                     , bonusesVipId
                 </if>
@@ -407,6 +450,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.accountId!=null">
                     , accountId
+                </if>
+                <if test="selector.activityId!=null">
+                    , activityId
                 </if>
                 <if test="selector.bonusesVipId!=null">
                     , bonusesVipId
@@ -458,6 +504,22 @@ ${nativeSql}        </if>
             <if test="condition.accountId.op=='in'">
                 ${condition.groupOp}   accountId  ${condition.accountId.op}
                 <foreach collection="condition.accountId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.activityId!=null">
+
+            <if test="condition.activityId.op!='in' and condition.activityId.op!='like' and condition.activityId.op!='leftlike'">
+                ${condition.groupOp}   activityId  ${condition.activityId.op} #{condition.activityId.data}
+            </if>
+            <if test="condition.activityId.op=='like'">
+                AND activityId like CONCAT('%', #{condition.activityId.data} , '%')
+            </if>
+            <if test="condition.activityId.op=='leftlike'">
+                AND activityId like CONCAT(#{condition.activityId.data} , '%')
+            </if>
+            <if test="condition.activityId.op=='in'">
+                ${condition.groupOp}   activityId  ${condition.activityId.op}
+                <foreach collection="condition.activityId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.bonusesVipId!=null">
@@ -544,6 +606,9 @@ ${nativeSql}        </if>
                     <if test="selector.accountId!=null">
                         , accountId
                     </if>
+                    <if test="selector.activityId!=null">
+                        , activityId
+                    </if>
                     <if test="selector.bonusesVipId!=null">
                         , bonusesVipId
                     </if>
@@ -594,6 +659,9 @@ ${executeSqlCount}        </select>
                 <if test="selector.accountId!=null">
                     , accountId
                 </if>
+                <if test="selector.activityId!=null">
+                    , activityId
+                </if>
                 <if test="selector.bonusesVipId!=null">
                     , bonusesVipId
                 </if>
@@ -643,6 +711,22 @@ ${executeSqlCount}        </select>
             <if test="condition.accountId.op=='in'">
                 ${condition.groupOp}   accountId  ${condition.accountId.op}
                 <foreach collection="condition.accountId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.activityId!=null">
+
+            <if test="condition.activityId.op!='in' and condition.activityId.op!='like' and condition.activityId.op!='leftlike'">
+                ${condition.groupOp}   activityId  ${condition.activityId.op} #{condition.activityId.data}
+            </if>
+            <if test="condition.activityId.op=='like'">
+                AND activityId like CONCAT('%', #{condition.activityId.data} , '%')
+            </if>
+            <if test="condition.activityId.op=='leftlike'">
+                AND activityId like CONCAT(#{condition.activityId.data} , '%')
+            </if>
+            <if test="condition.activityId.op=='in'">
+                ${condition.groupOp}   activityId  ${condition.activityId.op}
+                <foreach collection="condition.activityId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.bonusesVipId!=null">
@@ -732,6 +816,9 @@ ${executeSqlCount}        </select>
                 <if test="selector.accountId!=null">
                     , accountId
                 </if>
+                <if test="selector.activityId!=null">
+                    , activityId
+                </if>
                 <if test="selector.bonusesVipId!=null">
                     , bonusesVipId
                 </if>
@@ -798,6 +885,22 @@ ${nativeSql}        </if>
                 <if test="condition.accountId.op=='in'">
                     ${condition.groupOp}   accountId  ${condition.accountId.op}
                     <foreach collection="condition.accountId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.activityId!=null">
+
+                <if test="condition.activityId.op!='in' and condition.activityId.op!='like' and condition.activityId.op!='leftlike'">
+                    ${condition.groupOp}   activityId  ${condition.activityId.op} #{condition.activityId.data}
+                </if>
+                <if test="condition.activityId.op=='like'">
+                    AND activityId like CONCAT('%', #{condition.activityId.data} , '%')
+                </if>
+                <if test="condition.activityId.op=='leftlike'">
+                    AND activityId like CONCAT(#{condition.activityId.data} , '%')
+                </if>
+                <if test="condition.activityId.op=='in'">
+                    ${condition.groupOp}   activityId  ${condition.activityId.op}
+                    <foreach collection="condition.activityId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
             <if test="condition.bonusesVipId!=null">
@@ -893,6 +996,9 @@ ${nativeSql}        </if>
             </if>
             <if test="condition.accountId!=null">
                 AND accountId = #{condition.accountId}
+            </if>
+            <if test="condition.activityId!=null">
+                AND activityId = #{condition.activityId}
             </if>
             <if test="condition.bonusesVipId!=null">
                 AND bonusesVipId = #{condition.bonusesVipId}

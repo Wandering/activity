@@ -17,7 +17,7 @@ public interface IActivityNotify {
     /**
      * 是否可以领取奖励
      * @param userActivity
-     * @return
+     * @return (true可领取，false不可领取)
      */
     boolean hasGiveBonuses(UserActivityExDTO userActivity);
 }

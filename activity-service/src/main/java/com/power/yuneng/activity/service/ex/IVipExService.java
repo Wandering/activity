@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public interface IVipExService {
     boolean giveVip(List<Long> ids,Integer type,Long start,Long end);
-    boolean updateBonusesVip(List<Long> ids,Integer status);
+    boolean updateBonusesVip(List<Long> ids,Integer activityId, Integer status);
+    boolean updateActivityUser(Integer currProgress,Integer nextProgress,Integer activityId);
     Map<String,String> getSendMsg(String uniqueKey, String msgName);
 }
