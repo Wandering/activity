@@ -27,7 +27,7 @@ D
     <sql id="Base_Column_List">
         id as id ,
         name as name ,
-        desc as desc ,
+        activityDesc as activityDesc ,
         url as url ,
         imageUrl as imageUrl ,
         type as type ,
@@ -42,7 +42,7 @@ D
     <insert id="insert" parameterType="Activity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO power_activity (
         name,
-        desc,
+        activityDesc,
         url,
         imageUrl,
         type,
@@ -52,7 +52,7 @@ D
         endTime
         ) VALUES (
         #{name},
-        #{desc},
+        #{activityDesc},
         #{url},
         #{imageUrl},
         #{type},
@@ -67,7 +67,7 @@ D
     <insert id="insertMap" >
         INSERT INTO power_activity (
         name,
-        desc,
+        activityDesc,
         url,
         imageUrl,
         type,
@@ -77,7 +77,7 @@ D
         endTime
                 ) VALUES (
         #{map.name},
-        #{map.desc},
+        #{map.activityDesc},
         #{map.url},
         #{map.imageUrl},
         #{map.type},
@@ -99,8 +99,8 @@ D
             <if test="name!=null">
                 name = #{name},
             </if>
-            <if test="desc!=null">
-                desc = #{desc},
+            <if test="activityDesc!=null">
+                activityDesc = #{activityDesc},
             </if>
             <if test="url!=null">
                 url = #{url},
@@ -134,8 +134,8 @@ D
             <if test="map.name!=null">
                 name = #{map.name},
             </if>
-            <if test="map.desc!=null">
-                desc = #{map.desc},
+            <if test="map.activityDesc!=null">
+                activityDesc = #{map.activityDesc},
             </if>
             <if test="map.url!=null">
                 url = #{map.url},
@@ -169,8 +169,8 @@ D
             <if test="update.name!=null">
                 name = #{update.name},
             </if>
-            <if test="update.desc!=null">
-                desc = #{update.desc},
+            <if test="update.activityDesc!=null">
+                activityDesc = #{update.activityDesc},
             </if>
             <if test="update.url!=null">
                 url = #{update.url},
@@ -202,8 +202,8 @@ D
         <if test="condition.name!=null">
             AND name = #{condition.name}
         </if>
-        <if test="condition.desc!=null">
-            AND desc = #{condition.desc}
+        <if test="condition.activityDesc!=null">
+            AND activityDesc = #{condition.activityDesc}
         </if>
         <if test="condition.url!=null">
             AND url = #{condition.url}
@@ -235,8 +235,8 @@ D
             <if test="update.name!=null">
                 name = #{update.name},
             </if>
-            <if test="update.desc!=null">
-                desc = #{update.desc},
+            <if test="update.activityDesc!=null">
+                activityDesc = #{update.activityDesc},
             </if>
             <if test="update.url!=null">
                 url = #{update.url},
@@ -272,7 +272,7 @@ ${nativeSql}        </if>
         UPDATE power_activity
         <trim prefix="SET" suffixOverrides=",">
             name = #{name},
-            desc = #{desc},
+            activityDesc = #{activityDesc},
             url = #{url},
             imageUrl = #{imageUrl},
             type = #{type},
@@ -313,8 +313,8 @@ ${nativeSql}        </if>
                 <if test="selector.name!=null">
                     , name
                 </if>
-                <if test="selector.desc!=null">
-                    , desc
+                <if test="selector.activityDesc!=null">
+                    , activityDesc
                 </if>
                 <if test="selector.url!=null">
                     , url
@@ -377,20 +377,20 @@ ${nativeSql}        </if>
                 <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
-        <if test="condition.desc!=null">
+        <if test="condition.activityDesc!=null">
 
-            <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
-                AND   desc  ${condition.desc.op} #{condition.desc.data}
+            <if test="condition.activityDesc.op!='in' and condition.activityDesc.op!='like' and condition.activityDesc.op!='leftlike'">
+                AND   activityDesc  ${condition.activityDesc.op} #{condition.activityDesc.data}
             </if>
-            <if test="condition.desc.op=='like'">
-                AND desc like CONCAT('%', #{condition.desc.data} , '%')
+            <if test="condition.activityDesc.op=='like'">
+                AND activityDesc like CONCAT('%', #{condition.activityDesc.data} , '%')
             </if>
-            <if test="condition.desc.op=='leftlike'">
-                AND desc like CONCAT(#{condition.desc.data} , '%')
+            <if test="condition.activityDesc.op=='leftlike'">
+                AND activityDesc like CONCAT(#{condition.activityDesc.data} , '%')
             </if>
-            <if test="condition.desc.op=='in'">
-                ${condition.groupOp}   desc  ${condition.desc.op}
-                <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            <if test="condition.activityDesc.op=='in'">
+                ${condition.groupOp}   activityDesc  ${condition.activityDesc.op}
+                <foreach collection="condition.activityDesc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.url!=null">
@@ -526,8 +526,8 @@ ${nativeSql}        </if>
                 <if test="selector.name!=null">
                     , name
                 </if>
-                <if test="selector.desc!=null">
-                    , desc
+                <if test="selector.activityDesc!=null">
+                    , activityDesc
                 </if>
                 <if test="selector.url!=null">
                     , url
@@ -580,8 +580,8 @@ ${nativeSql}        </if>
                 <if test="selector.name!=null">
                     , name
                 </if>
-                <if test="selector.desc!=null">
-                    , desc
+                <if test="selector.activityDesc!=null">
+                    , activityDesc
                 </if>
                 <if test="selector.url!=null">
                     , url
@@ -644,20 +644,20 @@ ${nativeSql}        </if>
                 <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
-        <if test="condition.desc!=null">
+        <if test="condition.activityDesc!=null">
 
-            <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
-                ${condition.groupOp}   desc  ${condition.desc.op} #{condition.desc.data}
+            <if test="condition.activityDesc.op!='in' and condition.activityDesc.op!='like' and condition.activityDesc.op!='leftlike'">
+                ${condition.groupOp}   activityDesc  ${condition.activityDesc.op} #{condition.activityDesc.data}
             </if>
-            <if test="condition.desc.op=='like'">
-                AND desc like CONCAT('%', #{condition.desc.data} , '%')
+            <if test="condition.activityDesc.op=='like'">
+                AND activityDesc like CONCAT('%', #{condition.activityDesc.data} , '%')
             </if>
-            <if test="condition.desc.op=='leftlike'">
-                AND desc like CONCAT(#{condition.desc.data} , '%')
+            <if test="condition.activityDesc.op=='leftlike'">
+                AND activityDesc like CONCAT(#{condition.activityDesc.data} , '%')
             </if>
-            <if test="condition.desc.op=='in'">
-                ${condition.groupOp}   desc  ${condition.desc.op}
-                <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            <if test="condition.activityDesc.op=='in'">
+                ${condition.groupOp}   activityDesc  ${condition.activityDesc.op}
+                <foreach collection="condition.activityDesc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.url!=null">
@@ -792,8 +792,8 @@ ${nativeSql}        </if>
                     <if test="selector.name!=null">
                         , name
                     </if>
-                    <if test="selector.desc!=null">
-                        , desc
+                    <if test="selector.activityDesc!=null">
+                        , activityDesc
                     </if>
                     <if test="selector.url!=null">
                         , url
@@ -854,8 +854,8 @@ ${executeSqlCount}        </select>
                 <if test="selector.name!=null">
                     , name
                 </if>
-                <if test="selector.desc!=null">
-                    , desc
+                <if test="selector.activityDesc!=null">
+                    , activityDesc
                 </if>
                 <if test="selector.url!=null">
                     , url
@@ -917,20 +917,20 @@ ${executeSqlCount}        </select>
                 <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
-        <if test="condition.desc!=null">
+        <if test="condition.activityDesc!=null">
 
-            <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
-                ${condition.groupOp}   desc  ${condition.desc.op} #{condition.desc.data}
+            <if test="condition.activityDesc.op!='in' and condition.activityDesc.op!='like' and condition.activityDesc.op!='leftlike'">
+                ${condition.groupOp}   activityDesc  ${condition.activityDesc.op} #{condition.activityDesc.data}
             </if>
-            <if test="condition.desc.op=='like'">
-                AND desc like CONCAT('%', #{condition.desc.data} , '%')
+            <if test="condition.activityDesc.op=='like'">
+                AND activityDesc like CONCAT('%', #{condition.activityDesc.data} , '%')
             </if>
-            <if test="condition.desc.op=='leftlike'">
-                AND desc like CONCAT(#{condition.desc.data} , '%')
+            <if test="condition.activityDesc.op=='leftlike'">
+                AND activityDesc like CONCAT(#{condition.activityDesc.data} , '%')
             </if>
-            <if test="condition.desc.op=='in'">
-                ${condition.groupOp}   desc  ${condition.desc.op}
-                <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            <if test="condition.activityDesc.op=='in'">
+                ${condition.groupOp}   activityDesc  ${condition.activityDesc.op}
+                <foreach collection="condition.activityDesc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.url!=null">
@@ -1068,8 +1068,8 @@ ${executeSqlCount}        </select>
                 <if test="selector.name!=null">
                     , name
                 </if>
-                <if test="selector.desc!=null">
-                    , desc
+                <if test="selector.activityDesc!=null">
+                    , activityDesc
                 </if>
                 <if test="selector.url!=null">
                     , url
@@ -1148,20 +1148,20 @@ ${nativeSql}        </if>
                     <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
-            <if test="condition.desc!=null">
+            <if test="condition.activityDesc!=null">
 
-                <if test="condition.desc.op!='in' and condition.desc.op!='like' and condition.desc.op!='leftlike'">
-                    ${condition.groupOp}   desc  ${condition.desc.op} #{condition.desc.data}
+                <if test="condition.activityDesc.op!='in' and condition.activityDesc.op!='like' and condition.activityDesc.op!='leftlike'">
+                    ${condition.groupOp}   activityDesc  ${condition.activityDesc.op} #{condition.activityDesc.data}
                 </if>
-                <if test="condition.desc.op=='like'">
-                    AND desc like CONCAT('%', #{condition.desc.data} , '%')
+                <if test="condition.activityDesc.op=='like'">
+                    AND activityDesc like CONCAT('%', #{condition.activityDesc.data} , '%')
                 </if>
-                <if test="condition.desc.op=='leftlike'">
-                    AND desc like CONCAT(#{condition.desc.data} , '%')
+                <if test="condition.activityDesc.op=='leftlike'">
+                    AND activityDesc like CONCAT(#{condition.activityDesc.data} , '%')
                 </if>
-                <if test="condition.desc.op=='in'">
-                    ${condition.groupOp}   desc  ${condition.desc.op}
-                    <foreach collection="condition.desc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                <if test="condition.activityDesc.op=='in'">
+                    ${condition.groupOp}   activityDesc  ${condition.activityDesc.op}
+                    <foreach collection="condition.activityDesc.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
             <if test="condition.url!=null">
@@ -1306,8 +1306,8 @@ ${nativeSql}        </if>
             <if test="condition.name!=null">
                 AND name = #{condition.name}
             </if>
-            <if test="condition.desc!=null">
-                AND desc = #{condition.desc}
+            <if test="condition.activityDesc!=null">
+                AND activityDesc = #{condition.activityDesc}
             </if>
             <if test="condition.url!=null">
                 AND url = #{condition.url}

@@ -8,7 +8,7 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-08-03 18:24:58 $ 
+ * $Id:  2017-08-03 18:53:54 $ 
  */
 package com.power.yuneng.activity.entity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -23,7 +23,7 @@ public class Activity extends BaseDomain<Integer>{
     /** 活动名称 */
     private String name;
     /** 描述 */
-    private String desc;
+    private String activityDesc;
     /** 活动页面URL */
     private String url;
     /** 图片地址 */
@@ -48,12 +48,12 @@ public class Activity extends BaseDomain<Integer>{
     public String getName() {
         return this.name;
     }
-    public void setDesc(String value) {
-        this.desc = value;
+    public void setActivityDesc(String value) {
+        this.activityDesc = value;
     }
 
-    public String getDesc() {
-        return this.desc;
+    public String getActivityDesc() {
+        return this.activityDesc;
     }
     public void setUrl(String value) {
         this.url = value;
@@ -109,7 +109,7 @@ public class Activity extends BaseDomain<Integer>{
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
 			.append("Name",getName())
-			.append("Desc",getDesc())
+			.append("ActivityDesc",getActivityDesc())
 			.append("Url",getUrl())
 			.append("ImageUrl",getImageUrl())
 			.append("Type",getType())
