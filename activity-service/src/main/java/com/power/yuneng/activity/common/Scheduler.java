@@ -38,13 +38,18 @@ public class Scheduler {
     private IUserBonusesVipService userBonusesVipService;
     @Autowired
     private IActivityUserService activityUserService;
-    private static final String flag = "giveViptest";
-    @Scheduled(cron = "0 0/10 * * * ? ") //每天零点执行一次
+    private static final String flag = "giveVip";
+
+    /**
+     * 定时任务
+     * 延时赠送VIP会员
+     */
+    @Scheduled(cron = "0,59 0/5 * * * ? ") //每天零点执行一次
     public void statusGiveVip() {
         if (!repository.exists(flag)) {
             synchronized (Scheduler.class) {
                 if (!repository.exists(flag)) {
-                    repository.set(flag,true,10, TimeUnit.MICROSECONDS);
+                    repository.set(flag,true,4, TimeUnit.MINUTES);
                     Map<Integer,List<UserBonusesVip>> map = new HashMap<>();
                     Map<String,Object> params = new HashMap<>();
                     params.put("status",0);
