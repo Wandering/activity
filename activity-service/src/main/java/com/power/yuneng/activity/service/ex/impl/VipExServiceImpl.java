@@ -20,6 +20,15 @@ public class VipExServiceImpl implements IVipExService{
     public boolean giveVip(List<Long> ids, Integer type, Long start, Long end) {
         return vipExDAO.giveVip(ids,type,start,end);
     }
+    @Override
+    public boolean giveVip2(List<Long> ids, Integer type, Long start, Long end) {
+        return vipExDAO.giveVip2(ids,type,start,end);
+    }
+
+    @Override
+    public List<Long> queryUserVip() {
+        return vipExDAO.queryUserVip();
+    }
 
     @Override
     public boolean updateBonusesVip(List<Long> ids,Integer activityId, Integer status) {

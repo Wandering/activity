@@ -12,6 +12,8 @@ import java.util.Map;
  */
 public interface IVipExDAO {
     boolean giveVip(@Param("ids") List<Long> ids,@Param("type")Integer type,@Param("start")Long start,@Param("end")Long end);
+    boolean giveVip2(@Param("ids") List<Long> ids,@Param("type")Integer type,@Param("start")Long start,@Param("end")Long end);
+    List<Long> queryUserVip();
     boolean updateBonusesVip(@Param("ids") List<Long> ids,@Param("activityId")Integer activityId,@Param("status")Integer status);
     boolean updateActivityUser(@Param("currProgress") Integer currProgress,@Param("nextProgress") Integer nextProgress,@Param("activityId")Integer activityId);
     Map<String,String> getSendMsg(@Param("uniqueKey")String uniqueKey,@Param("msgName")String msgName);

@@ -12,6 +12,19 @@
         </if>
     </update>
 
+    <insert id="giveVip2">
+        <if test="ids!=null">
+            INSERT INTO `power`.`power_user_vip` (`id`, `type`, `start`, `end`)
+            <foreach collection="ids" separator="," item="id" open="VALUES" close="">
+                (#{id}, #{type}, #{start}, #{end})
+            </foreach>
+        </if>
+    </insert>
+
+    <select id="queryUserVip" resultType="java.lang.Long">
+            SELECT id FROM power.power_user_vip
+    </select>
+
     <update id="updateBonusesVip">
         <if test="ids!=null">
         UPDATE power_user_bonuses_vip bonusesvip SET status = #{status} WHERE activityId = #{activityId} AND accountId

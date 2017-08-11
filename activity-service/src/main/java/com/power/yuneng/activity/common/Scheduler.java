@@ -44,7 +44,7 @@ public class Scheduler {
      * 定时任务
      * 延时赠送VIP会员
      */
-    @Scheduled(cron = "0,59 0/5 * * * ? ") //每天零点执行一次
+    @Scheduled(cron = "0 0/5 * * * ? ") //每天零点执行一次
     public void statusGiveVip() {
         if (!repository.exists(flag)) {
             synchronized (Scheduler.class) {
@@ -79,7 +79,9 @@ public class Scheduler {
                         }
                         Integer activityId = userBonusesVips.get(0).getActivityId();
 //                        Integer currProgress,Integer nextProgress,Integer activityId
-                        vipExService.giveVip(ids,bonusesVip.getVipId(),bonusesVip.getStartTime(),bonusesVip.getEndTime());
+                        List<Long> userVips = vipExService.queryUserVip();
+                        ids.remove(userVips);
+                        vipExService.giveVip2(ids,bonusesVip.getVipId(),bonusesVip.getStartTime(),bonusesVip.getEndTime());
                         vipExService.updateBonusesVip(ids,activityId,1);
                         vipExService.updateActivityUser(QusetionProgressEnum.END.getValue(), QusetionProgressEnum.END.getValue(),activityId);
                         logger.info("奖励发放完成!\n活动编号:{}\nids:{}\n时间:{}",activityId, JSON.toJSONString(ids),System.currentTimeMillis());
