@@ -1,6 +1,7 @@
 package com.power.yuneng.activity.service.ex;
 
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 public interface IVipExService {
     boolean giveVip(List<Long> ids,Integer type,Long start,Long end);
     boolean giveVip2(List<Long> ids,Integer type,Long start,Long end);
+    boolean chargeUserVip(List<Long> ids,Integer type);
     List<Long> queryUserVip();
     boolean updateBonusesVip(List<Long> ids,Integer activityId, Integer status);
     boolean updateActivityUser(Integer currProgress,Integer nextProgress,Integer activityId);

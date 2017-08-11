@@ -83,6 +83,7 @@ public class Scheduler {
                         ids.remove(userVips);
                         vipExService.giveVip2(ids,bonusesVip.getVipId(),bonusesVip.getStartTime(),bonusesVip.getEndTime());
                         vipExService.updateBonusesVip(ids,activityId,1);
+                        vipExService.chargeUserVip(ids,bonusesVip.getVipId());
                         vipExService.updateActivityUser(QusetionProgressEnum.END.getValue(), QusetionProgressEnum.END.getValue(),activityId);
                         logger.info("奖励发放完成!\n活动编号:{}\nids:{}\n时间:{}",activityId, JSON.toJSONString(ids),System.currentTimeMillis());
                     }

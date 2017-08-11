@@ -26,6 +26,11 @@ public class VipExServiceImpl implements IVipExService{
     }
 
     @Override
+    public boolean chargeUserVip(List<Long> ids, Integer type) {
+        return vipExDAO.chargeUserVip(ids,type);
+    }
+
+    @Override
     public List<Long> queryUserVip() {
         return vipExDAO.queryUserVip();
     }
