@@ -14,14 +14,14 @@
 
     <update id="updateBonusesVip">
         <if test="ids!=null">
-        UPDATE power.power_user_bonuses_vip bonusesvip SET status = #{status} WHERE activityId = #{activityId} AND id
+        UPDATE power_user_bonuses_vip bonusesvip SET status = #{status} WHERE activityId = #{activityId} AND id
         <foreach collection="ids" separator="," item="id" open="in (" close=")">
             #{id}
         </foreach>
         </if>
     </update>
     <update id="updateActivityUser">
-            UPDATE power.power_activity_user activityUser SET activityUser.progress = #{nextProgress}
+            UPDATE power_activity_user activityUser SET activityUser.progress = #{nextProgress}
             WHERE activityUser.activityId = #{activityId}
             AND activityUser.progress != #{currProgress}
     </update>
