@@ -39,7 +39,7 @@ public class Scheduler {
     @Autowired
     private IActivityUserService activityUserService;
     private static final String flag = "giveViptest";
-    @Scheduled(cron = "0,10 * * * * ? ") //每天零点执行一次
+    @Scheduled(cron = "0 0/10 * * * ? ") //每天零点执行一次
     public void statusGiveVip() {
         if (!repository.exists(flag)) {
             synchronized (Scheduler.class) {
