@@ -11,7 +11,7 @@ spring:
     password: Redis2017
     database: 0
   datasource:
-      url: jdbc:mysql://rdspower.mysql.rds.aliyuncs.com:3306/sms?autoReconnect=true&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://rdspower.mysql.rds.aliyuncs.com:3306/activity?autoReconnect=true&zeroDateTimeBehavior=convertToNull
       username: power_root
       password: power#root@2017
       #连接池的配置信息
